@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-        <meta name="description" content="HTML, CSS & JS Quiz">
-        <title>Quiz App</title>
-        <link rel="shortcut icon" href="#">
-        <link href="main.css" rel="stylesheet" type="text/css" />
-        <script scr="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <sctip src="index.js"></sctip>
-    </head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Quiz App</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet"
+    type="text/css" />
+  <link href="app.css" rel="stylesheet" type="text/css" />
+</head>
     <body>
-        <header>
-            <div class="group">
-                <h1>Coffee Quiz</h1>
+
+        <main role="main">
+            <header>
+                <div class="group">
+                    <h1>Coffee Quiz</h1>
+                </div>
+           
+            <div class="question-score">
+                <p>Question:<span class="js-question-number">0</span>/10</p>
+                <p>Score:<span class="js-score">0</span></p>
             </div>
         </header>
-
-        <main>
-            <section>
-            <div class="quizStart">
-                <div class ="item">
-                
-                <ul>
-                    <li>Question: <span class="questionNumber">0</span>/10</li>
-                    <li>Score: <span class="score">0</span></li>
-                </ul>
-                </div>
-                <div class="item">
+            <div class="coffee-quiz">
+                <div class="js-quiz">
                     <h2>Are you a REAL coffee lover?</h2>
-                <button type="button" class="startButton">Let's get Sippin!</button>
-
+                    <button type="button" class="button js-quiz-submit">Let's get Sippin!</button>
                 </div>
-                <div class="questionAnswerForm">
+                <div class="quiz-form js-question">
+                </div>
+                <div class = "quiz-form js-response ">
+                </div>
+                <div class = "quiz-form js-final ">
                 </div>
             </div>
-            </section>
+            
         </main>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.js" crossorigin="anonymous"></script>
+        <script src="app.js"></script>
     </body>
 </html>
