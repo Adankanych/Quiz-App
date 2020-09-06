@@ -10,7 +10,7 @@ const STORE = {
                 'In 1955 by McDonalds.',
                 'In the 15th century by Turks',
             ],
-            correctAnswer: 'In 800 A.D. by a monk'
+            correctAnswer: 'In 800 A.D. by a monk.'
         },
         {
             question: 'What does coffee come from?',
@@ -30,7 +30,7 @@ const STORE = {
                 'Coffee cherries are not ediable.',
                 'Coffee cherries were used in pies.',
             ],
-            correctAnswer: 'Coffee cherries were fermented into a wine-like drink'
+            correctAnswer: 'Coffee cherries were fermented into a wine-like drink.'
         },
         {
             question: 'What country grows the most coffee in the world?',
@@ -95,12 +95,12 @@ const STORE = {
         {
             question: 'Where does the word coffee come from?',
             answers: [
-                'The Arabic word for wine "Qahwah"',
+                'The Arabic word for wine Qahwah',
                 'It has always been coffee',
                 'From the Turkish word',
                 'From the Dutch word',
             ],
-            correctAnswer: 'The Arabic word for wine "Qahwah"'
+            correctAnswer: 'The Arabic word for wine Qahwah'
         }
 
     ],
@@ -110,84 +110,211 @@ const STORE = {
 };
     
 
-//variable for the quiz score and question number
+/**
+ * 
+ * Technical requirements:
+ * 
+ * Your app should include a render() function, that regenerates the view each time the store is updated. 
+ * See your course material and access support for more details.
+ *
+ * NO additional HTML elements should be added to the index.html file.
+ *
+ * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
+ *
+ * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
+ * 
+ */
 
+/********** TEMPLATE GENERATION FUNCTIONS **********/
 
-//initial Intro
-function renderIntro(){
-    console.log("submit button clicked")
-    $(".quiz-form").hide();
-    $(".js-quiz").on('click', '.js-quiz-submit', function (event){
-        $('.js-question-number').text(1);
-        $('.js-question').show
-        $('.js-question').prepend(renderQuestion());
+// These functions return HTML templates
+
+//Generates HTML for start screen
+function generateStartScreen(){
+    return`
+      <div class="start-screen">
+          <p>How well do you know your coffee?</p>
+          <button type="button" id="start">Let's Get Sippin!</button>
+      </div>`;
+}
+
+//Generates the HTML for number and score
+function generateQuestionNumberAndScore(){
+    return`
+    <ul class="question-and-score">
+    <li id="question-number">
+    Question Number: ${STORE.questionNumber + 1}/${STORE.questions.length}
+    </li>
+    <li id="score">
+        SCORE: ${STORE.score}/${STORE.questions.length}
+    </li>
+    </ul>`;
+}
+// Generates multiple answers for one question
+function generateAnswers(){
+    const answersArray = STORE.questions[STORE.questionNumber].answers
+    let answersHTML = " ";
+    let i = 0;
+
+    answersArray.forEach(answers => {
+        answersHTML += 
+        `<div id="choice-container-${i}">
+            <input type="radio" name="choice" id="choice${i + 1}" value="${answers}" tabindex="${i + 1}" required>
+            <label for="choice${i + 1}"> ${answers}</label>
+            </div>`;
+            i++;
     });
+    return answersHTML;
 }
 
-//update count
-function increaseScore(){
-    score++;
-    $(".js-quesiton-number").text(score);
+//Generates one question to display
+function generateQuestion(){
+    let questionNumber = STORE.questions[STORE.questionNumber];
+    return`
+    <form id="question-form" class="question-form">
+       <fieldset>
+          <div class="question">
+                <legend> ${questionNumber.question}</legend>
+          </div>
+          <div class="choice">
+            <div class="answers">
+              ${generateAnswers()}
+            </div>
+          </div>
+          <button type="submit" id="submit-answer-button" tabindex="5">Check</button>
+          <button type="button" id="next-question-button" tabindex="6"> Next</button>
+        </.fieldset>
+    </form>`;
 }
 
-//question function
-function renderQuestion(){
-    if (questionNumber < STORE.length) {
-        return renderQuestionForm(questionNumber);
-    } else {
-        $(".js-question").hide();
-        finalScore();
-        $(".js-quesiton-number").text(10);
+//Generates the results screen
+function generateResultsScreen(){
+    return`
+    <div class="results">
+        <form id="js-restart-quiz">
+            <fieldset>
+                <div class="row">
+                    <div class="col-12">
+                        <legend>Your Score is: ${STORE.score}/${STORE.questions.length}</legend>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                     <button type="button" id="restart">Restart Quiz</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>`;
+}
+
+//Generates feedback if the answer was correct or incorrect
+function generateFeedback(answerStatus){
+  let correctAnswer = STORE.questions[STORE.questionNumber].correctAnswer;
+  let html = '';
+  if (answerStatus === 'correct') {
+      html = `
+      <div class="right-answer"> That is correct!</div>`;
+  }
+  else if (answerStatus === 'incorrect') {
+      html = 
+      `<div class = "wrong-answer"> That is incorrect. The correct answer is ${correctAnswer}.</div>`;
+  }
+  return html;
+}
+
+/********** RENDER FUNCTION(S) **********/
+
+// This function conditionally replaces the contents of the <main> tag based on the state of the store
+function render(){
+    let html ='';
+
+    if (STORE.quizStarted === false) {
+        $('main').html(generateStartScreen());
+        return;
     }
+    else if (STORE.questionNumber >= 0 && STORE.questionNumber < STORE.questions.length) {
+        html = generateQuestionNumberAndScore();
+        html += generateQuestion();
+        $('main').html(html);
+    }
+    else {
+        $('main').html(generateResultsScreen());
+    }
+
+}
+/********** EVENT HANDLER FUNCTIONS **********/
+
+// These functions handle events (submit, click, etc)
+
+//Handles a clickon the quiz's start button
+function handleStartClick() {
+    $('main').on('click', '#start', function(event){
+        STORE.quizStarted = true;
+        render();
+    });
+
 }
 
-function submitAnswer(){
-    $(".coffee-quiz").on("submit", function (event){
+//Handles the click on the next button
+function handleNextQuestionClick(){
+    $('body').on('click', '#next-question-button', (event) => {
+        render();
+    });
+}
+
+
+//Handles submission of the question form
+function handleQuestionFormSubmission(){
+    $('body').on('submit', '#question-form', function (event){
         event.preventDefault();
-        $(".quiz.form").hide();
-        $(".js-response").show();
-        let selected = $('input:checked');
-        let answer = selected.val();
-        let correct = STORE[questionNumber].correctAnswer;
-        if (answer === correct) {
-            correctAnswer();
+        const questionNumber = STORE.questions[STORE.questionNumber];
+
+        //get value from radio button checked
+        let selectedChoice = $('input[name=choice]:checked').val();
+
+        //Creates id '#choice-container' and the index of the current question in the answers array.
+        let choiceContainerID = `#choice-container-${questionNumber.answers.findIndex(i => i === selectedChoice)}`;
+        console.log('Choice Container ID', choiceContainerID);
+        if (selectedChoice === questionNumber.correctAnswer) {
+            STORE.score++;
+            $(choiceContainerID).append(generateFeedback('correct'));
         } else {
-            wrongAnswer();
+            $(choiceContainerID).append(generateFeedback('incorrect'));
         }
-    });
-}
-//create html for question form
-function renderQuestionForm(questionIndex) {
-    let formMaker=$(`<form>
-        <fieldset>
-            <legend class="questionText">${STORE[questionIndex].question}</legend>
-        </fieldset>
-    </form>`).appendTo();
-
-    let fieldSelector = $(formMaker).find('fieldset');
-
-    STORE[questionIndex].answers.forEach (function (answerValue, answerIndex) {
-        $(`<label class="question-score" for ="${answerIndex}">
-            <input class ="radio" type ="radio" id="${answerIndex}" value = "${answerValue}" name="answer" required>
-            <span> ${answerValue}</span>
-            </label>`).appendTo(fieldSelector);
-    });
-    $(`<button type="button" class="button js-quiz-submit">Let's get Sippin!</button>`).appendTo(fieldSelector);
-    return formMaker;
-}
-
-function nextQuestion() {
-    $(".coffee-quiz").on('click', '.nextButton', function (event) {
-        $('.js-question').show();
-        $('.js-question form').replaceWith(renderQuestion());
+        STORE.questionNumber++;
+        //hide the submit button
+        $('#submit-answer-button').hide();
+        //disable all inputs
+        $('input[type="radio]').each(() => {
+            $('input[type=radio]').attr('disabled', true);
+        });
+        //show the next button
+        $('#next-question-button').show();
     });
 }
 
-function startApp(){
-    renderIntro();
-    renderQuestion();
-    submitAnswer();
-    nextQuestion();
-    reloadQuiz();
+//Resets all values to prepare to restart the quiz
+
+function restartQuiz(){
+    STORE.quizStarted = false;
+    STORE.questionNumber = 0;
+    STORE.score = 0;
 }
-$(startApp);
+
+function handleRestartButtonClick() {
+    $('body').on('click', '#restart', () => {
+        restartQuiz();
+        render();
+    });
+}
+
+function handleQuizApp(){
+    render();
+    handleStartClick();
+    handleNextQuestionClick();
+    handleQuestionFormSubmission();
+    handleRestartButtonClick();
+}
+$(handleQuizApp);
