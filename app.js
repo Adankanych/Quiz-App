@@ -15,9 +15,9 @@ const STORE = {
         {
             question: 'What does coffee come from?',
             answers: [
-                'Coffee comes from a seed from a cherry like berry',
                 'Coffee comes from a bean from a bush',
                 'Coffee come from a nut in a tree',
+                'Coffee comes from a seed from a cherry like berry',
                 'Coffee comes from coffee',
             ],
             correctAnswer: 'Coffee comes from a seed from a cherry like berry'
@@ -25,8 +25,8 @@ const STORE = {
         {
             question: 'What else were coffee cherries turned into?',
             answers: [
-                'Coffee cherries were fermented into a wine-like drink.',
                 'Only coffee.',
+                'Coffee cherries were fermented into a wine-like drink.',
                 'Coffee cherries are not ediable.',
                 'Coffee cherries were used in pies.',
             ],
@@ -45,10 +45,10 @@ const STORE = {
         {
             question: 'Which only two states grow coffee in the U.S.?',
             answers: [
-                'Hawaii and California',
                 'Hawaii and Alaska',
                 'California and Alaksa',
                 'Alaska and Florida',
+                'Hawaii and California',
             ],
             correctAnswer: 'Hawaii and California'
         },
@@ -56,28 +56,28 @@ const STORE = {
             question: 'How much does the worlds most expensive coffee cost?',
             answers: [
                 'It costs $600 a pound.',
-                'It costs $1000 a pound',
-                'It costs $30 a pound',
-                'It costs $5 a pound',
+                'It costs $1000 a pound.',
+                'It costs $30 a pound.',
+                'It costs $5 a pound.',
             ],
             correctAnswer: 'It costs $600 a pound.'
         },
         {
             question: 'What is the worlds most expensive coffee made of?',
             answers: [
-                'It comes from the feces of an Asian palm civet',
                 'A coffee bean',
                 'A gold covered coffee bean',
                 'It does not come from a coffee bean',
+                'It comes from the feces of an Asian palm civet',
             ],
             correctAnswer: 'It comes from the feces of an Asian palm civet'
         },
         {
             question: 'Which country is home to the biggest coffee lovers?',
             answers: [
-                'Finland is home to the worlds biggest coffee lovers',
-                'America is home to the worlds biggest coffee lovers.',
+                'America is home to the worlds biggest coffee lovers',
                 'Cuba is home to the worlds biggest coffee lovers',
+                'Finland is home to the worlds biggest coffee lovers',
                 'Spain is home to the worlds biggest coffee lovers',
             ],
             correctAnswer: 'Finland is home to the worlds biggest coffee lovers'
@@ -95,8 +95,8 @@ const STORE = {
         {
             question: 'Where does the word coffee come from?',
             answers: [
-                'The Arabic word for wine Qahwah',
                 'It has always been coffee',
+                'The Arabic word for wine Qahwah',
                 'From the Turkish word',
                 'From the Dutch word',
             ],
